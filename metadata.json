@@ -1,0 +1,10 @@
+{
+  "name": "BrightlyPix | Neural Image Optimization Suite",
+  "description": "Professional-grade batch image compression, resizing, and neural background removal tool. 100% client-side, privacy-first, GPU-accelerated engine.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "Image Processing",
+    "Batch Operations",
+    "File Conversion"
+  ]
+}
