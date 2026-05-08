@@ -356,9 +356,9 @@ export default function App() {
         dimensionCeiling = Math.max(job.originalWidth || 0, job.originalHeight || 0) || 16384;
       }
 
-      const initialQuality = targetOptions.maxSizeMB <= 0.05 ? 0.85 : 
-                            targetOptions.maxSizeMB <= 0.1 ? 0.9 : 
-                            targetOptions.maxSizeMB <= 0.3 ? 0.92 : 0.95;
+      const initialQuality = targetOptions.maxSizeMB <= 0.05 ? 0.75 : 
+                            targetOptions.maxSizeMB <= 0.1 ? 0.78 : 
+                            targetOptions.maxSizeMB <= 0.3 ? 0.8 : 0.82;
 
       const compressionOptions = {
         maxSizeMB: targetOptions.maxSizeMB,
@@ -366,7 +366,7 @@ export default function App() {
         useWebWorker: targetOptions.useWebWorker,
         fileType: effectiveFileType,
         initialQuality: initialQuality,
-        alwaysKeepResolution: !targetOptions.customWidth && !targetOptions.customHeight && targetOptions.maxWidthOrHeight >= 16384,
+        alwaysKeepResolution: targetOptions.maxWidthOrHeight >= 16384 && targetOptions.maxSizeMB > 0.1,
         preserveExif: true,
       };
 
@@ -1159,9 +1159,9 @@ export default function App() {
                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Compression Intensity</label>
                     <div className="grid grid-cols-3 gap-2">
                       {[
-                        { label: 'Standard', mb: 0.5, q: '0.85', desc: 'Web Ready' },
-                        { label: 'Extreme', mb: 0.08, q: '0.6', desc: 'Binary Crush' },
-                        { label: 'Tiny', mb: 0.02, q: '0.4', desc: 'Ultra Minimal' }
+                        { label: 'Standard', mb: 0.2, q: '0.8', desc: 'Web Ready' },
+                        { label: 'Extreme', mb: 0.1, q: '0.7', desc: 'Binary Crush' },
+                        { label: 'Tiny', mb: 0.05, q: '0.6', desc: 'Ultra Minimal' }
                       ].map((tier) => (
                         <button
                           key={tier.label}
