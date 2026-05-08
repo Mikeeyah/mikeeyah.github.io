@@ -356,16 +356,18 @@ export default function App() {
         dimensionCeiling = Math.max(job.originalWidth || 0, job.originalHeight || 0) || 16384;
       }
 
-      const initialQuality = targetOptions.maxSizeMB <= 0.05 ? 0.7 : 
-                            targetOptions.maxSizeMB <= 0.1 ? 0.75 : 
-                            targetOptions.maxSizeMB <= 0.3 ? 0.8 : 0.85;
+      const initialQuality = targetOptions.maxSizeMB <= 0.05 ? 0.85 : 
+                            targetOptions.maxSizeMB <= 0.1 ? 0.9 : 
+                            targetOptions.maxSizeMB <= 0.3 ? 0.92 : 0.95;
 
       const compressionOptions = {
         maxSizeMB: targetOptions.maxSizeMB,
         maxWidthOrHeight: dimensionCeiling,
         useWebWorker: targetOptions.useWebWorker,
         fileType: effectiveFileType,
-        initialQuality: useProcessedSource ? initialQuality * 0.9 : initialQuality,
+        initialQuality: initialQuality,
+        alwaysKeepResolution: !targetOptions.customWidth && !targetOptions.customHeight && targetOptions.maxWidthOrHeight >= 16384,
+        preserveExif: true,
       };
 
       let processedFile = await imageCompression(sourceFile as File, compressionOptions);
