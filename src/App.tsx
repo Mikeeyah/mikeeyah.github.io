@@ -324,10 +324,10 @@ export default function App() {
           }
 
           const removedBgBlob = await removeBackground(sourceFile, {
+            // Use GPU for maximum performance
+            device: 'gpu', 
             model: targetOptions.aiModel,
             debug: false,
-            // Explicitly handle threading to minimize console noise
-            device: 'cpu', 
             fetchArgs: { cache: 'force-cache' },
             progress: (model: string, done: number, total: number) => {
               const progressVal = total ? Math.round((done / total) * 100) : 0;
@@ -356,9 +356,9 @@ export default function App() {
         dimensionCeiling = Math.max(job.originalWidth || 0, job.originalHeight || 0) || 16384;
       }
 
-      const initialQuality = targetOptions.maxSizeMB <= 0.05 ? 0.4 : 
-                            targetOptions.maxSizeMB <= 0.1 ? 0.6 : 
-                            targetOptions.maxSizeMB <= 0.3 ? 0.75 : 0.85;
+      const initialQuality = targetOptions.maxSizeMB <= 0.05 ? 0.7 : 
+                            targetOptions.maxSizeMB <= 0.1 ? 0.75 : 
+                            targetOptions.maxSizeMB <= 0.3 ? 0.8 : 0.85;
 
       const compressionOptions = {
         maxSizeMB: targetOptions.maxSizeMB,
@@ -828,7 +828,7 @@ export default function App() {
                     </div>
                     <div>
                       <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Global Support</p>
-                      <p className="font-bold text-white">support@brightlypix.com</p>
+                      <p className="font-bold text-white">support@brightlypix.engine</p>
                     </div>
                   </div>
                 </div>
@@ -1028,8 +1028,8 @@ export default function App() {
                               </span>
                             )}
                             <button 
-                              onClick={() => removeJob(job.id)}
-                              className="p-1.5 opacity-0 group-hover:opacity-100 text-slate-500 hover:text-red-400 transition-all"
+                              onClick={(e) => { e.stopPropagation(); removeJob(job.id); }}
+                              className="p-1.5 md:opacity-0 group-hover:opacity-100 text-slate-500 hover:text-red-400 transition-all z-10"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
